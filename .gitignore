@@ -1,0 +1,12 @@
+# Cartelle di compilazione e IDE
+build/
+bin/
+.vs/
+*.user
+
+# Eseguibili e file temporanei
+*.exe
+*.obj
+*.o
+*.lib
+*.exp
