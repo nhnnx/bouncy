@@ -104,7 +104,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Load textures
-	success &= txBumpy.loadFromFile("images/bumpy.png");		 success &= txBumpyE.loadFromFile("images/bumpy.png", gRendererE);
+	success &= txBumpy.loadFromFile("images/bumpy30.png");		 success &= txBumpyE.loadFromFile("images/bumpy.png", gRendererE);
 	success &= txIce.loadFromFile("images/ice.png");			 success &= txIceE.loadFromFile("images/ice.png", gRendererE);
 	success &= txFloor.loadFromFile("images/floor.png");		 success &= txFloorE.loadFromFile("images/floor.png", gRendererE);
 	success &= txFloorUp.loadFromFile("images/up.png");			 success &= txFloorUpE.loadFromFile("images/up.png", gRendererE);

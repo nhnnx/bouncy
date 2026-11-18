@@ -27,8 +27,9 @@ cWorld::cWorld(int id, int lives, int score)
 	nCompleted = 0;
 	nObj = 0;
 	Objects = NULL;
-	CellX = 0;
-	CellY = 0;
+	Xoff = 0;
+	Yoff = 40;
+	CellX = CellY = 0;
 	Quit = false;
 
 	Bumpy = NULL;
@@ -391,11 +392,11 @@ void cWorld::Render()
 	// Add background picture...
 
 	// Show extra lives and points
-	int xoff = 10, yoff = 10;
+	int xoff = 15, yoff = 15;
 	for (int i = 0; i < Lives - 1; i++) {
 		if (txLife.getWidth()) txLife.render(xoff, yoff);
 		else RenderObjectDefault(gRenderer, OBJ_Life, (float)xoff, (float)yoff);
-		xoff += 20;
+		xoff += 30;
 	}
 	LTexture txScore;
 	char bfrScore[100];
@@ -428,8 +429,8 @@ cCell* cWorld::SetGrid(int cols, int rows)
 			Grid[r + c * Rows].col = c;
 		}
 	}
-	CellX = SCREEN_WIDTH / Cols;
-	CellY = SCREEN_HEIGHT / Rows;
+	CellX = (SCREEN_WIDTH - Xoff) / Cols;
+	CellY = (SCREEN_HEIGHT - Yoff) / Rows;
 	return Grid;
 }
 
@@ -443,8 +444,8 @@ cCell* cWorld::grid(int col, int row)
 bool cWorld::NewObject(int type, int col, int row, int id)
 {
 	bool success = false;
-	int x0 = CellX * col;
-	int y0 = CellY * row;
+	int x0 = Xoff + CellX * col;
+	int y0 = Yoff + CellY * row;
 	cObject* obj = NULL;
 
 	switch (type) {
@@ -745,7 +746,7 @@ cLevel::cLevel(int levelID)
 		NewObject(OBJ_SIDE_Nways, 6, 1, 1);
 		NewObject(OBJ_SIDE_Nways, 5, 1, 1);
 		NewObject(OBJ_FLOOR_Down, 6, 1, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 6, 0, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 6, 0, 1);
 		NewObject(OBJ_Food, 6, 1, 0);
 		NewObject(OBJ_FLOOR_Reducing, 5, 0, 1);
 		NewObject(OBJ_FLOOR_Reducing, 2, 4, 0);
@@ -920,7 +921,7 @@ cLevel::cLevel(int levelID)
 		NewObject(OBJ_FLOOR_Magnetic, 1, 2, 0);
 		NewObject(OBJ_FLOOR_Ice, 3, 3, 0);
 		NewObject(OBJ_FLOOR_Spring, 0, 4, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 2, 3, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 2, 3, 1);
 		NewObject(OBJ_FLOOR_Wall, 1, 3, 0);
 		NewObject(OBJ_FLOOR_Forced, 0, 2, 0);
 		NewObject(OBJ_FLOOR_Magnetic, 0, 1, 0);
@@ -1075,14 +1076,14 @@ cLevel::cLevel(int levelID)
 
 	case WORLD_1 | 3: {
 		SetGrid(8, 6);
-		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 1, 2, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 2, 1, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 3, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 4, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 5, 1, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 6, 2, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 7, 0, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 1, 2, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 2, 1, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 3, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 4, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 5, 1, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 6, 2, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 7, 0, 1);
 		NewObject(OBJ_Food, 0, 2, 0);
 		NewObject(OBJ_Food, 1, 4, 0);
 		NewObject(OBJ_Food, 2, 3, 0);
@@ -1105,7 +1106,7 @@ cLevel::cLevel(int levelID)
 
 	case WORLD_1 | 4: {
 		SetGrid(8, 6);
-		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 1);
 		NewObject(OBJ_FLOOR_Ice, 1, 0, 0);
 		NewObject(OBJ_FLOOR_Ice, 2, 0, 0);
 		NewObject(OBJ_FLOOR_Ice, 3, 0, 0);
@@ -1116,13 +1117,13 @@ cLevel::cLevel(int levelID)
 		NewObject(OBJ_FLOOR_Ice, 3, 1, 0);
 		NewObject(OBJ_SIDE_Spine, 5, 1, 0);
 
-		NewObject(OBJ_FLOOR_SpineUD, 1, 2, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 1, 2, 1);
 		NewObject(OBJ_FLOOR_Ice, 2, 2, 0);
 		NewObject(OBJ_FLOOR_Ice, 3, 2, 0);
 		NewObject(OBJ_FLOOR_Ice, 4, 2, 0);
 
 		NewObject(OBJ_FLOOR_Ice, 5, 3, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 6, 3, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 6, 3, 1);
 
 		NewObject(OBJ_SIDE_Spine, 3, 4, 0);
 		NewObject(OBJ_FLOOR_Ice, 4, 4, 0);
@@ -1231,8 +1232,8 @@ cLevel::cLevel(int levelID)
 
 	case WORLD_1 | 7: {
 		SetGrid(8, 6);
-		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 7, 0, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 7, 0, 1);
 		NewObject(OBJ_FLOOR_Ice, 0, 3, 0);
 		NewObject(OBJ_FLOOR_Ice, 7, 3, 0);
 		NewObject(OBJ_Food, 0, 2, 0);
@@ -1357,7 +1358,7 @@ cLevel::cLevel(int levelID)
 		NewObject(OBJ_Food, 6, 4, 0);
 		NewObject(OBJ_Food, 6, 2, 0);
 		NewObject(OBJ_Food, 6, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 5, 0, 0);
+		NewObject(OBJ_FLOOR_Spine, 5, 0, 0);
 		NewObject(OBJ_FLOOR_Exit, 5, 5, 0);
 		NewObject(OBJ_Bumpy, 0, 0);
 	} break;
@@ -1372,14 +1373,14 @@ cLevel::cLevel(int levelID)
 		NewObject(OBJ_FLOOR_Spine, 3, 5, 0);
 		NewObject(OBJ_FLOOR_Spine, 5, 5, 0);
 		NewObject(OBJ_FLOOR_Spine, 7, 5, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 1, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 2, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 3, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 4, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 5, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 6, 0, 0);
-		NewObject(OBJ_FLOOR_SpineUD, 7, 0, 0);
+		NewObject(OBJ_FLOOR_SpineUD, 0, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 1, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 2, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 3, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 4, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 5, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 6, 0, 1);
+		NewObject(OBJ_FLOOR_SpineUD, 7, 0, 1);
 		NewObject(OBJ_Life, 7, 0, 0);
 		NewObject(OBJ_Life, 6, 0, 0);
 		NewObject(OBJ_Life, 5, 0, 0);
@@ -2036,6 +2037,17 @@ cCell* cLevel::grid(int col, int row)
 	return Grid + row + col * Rows;
 }
 
+cObject* cLevel::FindNextObjectVisible(cCell* cell0, unsigned int objtype)
+{
+	cObject* next = NULL;
+	do {
+		next = FindNextObject(cell0, objtype);
+		cell0 = next->myCell;
+	}
+	while (next && next->Status < 0);
+	return next;
+}
+
 cObject* cLevel::FindNextObject(cCell* cell0, unsigned int objtype)
 {
 	cObject* next = NULL;
@@ -2214,8 +2226,8 @@ cBumpy::cBumpy() : cObject()
 	crossingside = false;
 
 	// These should depend on grid dimensions
-	W = 20;
-	H = 20;
+	W = BumpyW;
+	H = BumpyH;
 	//Collider
 	Collider.w = (int)W;
 	Collider.h = (int)H;
@@ -2300,7 +2312,7 @@ void cBumpy::MoveOnCloud()
 		if (!floor) {
 			bool dontmove = false;
 			if (pressedDown) {
-				// is there a enemy?
+				// is there a enemy? $$$
 				for (int i = 0; i < c->nObj; i++) {
 					if (c->Objects[i]->type == OBJ_Enemy) {
 						dontmove = true;
@@ -2426,7 +2438,7 @@ void cBumpy::update()
 			if (lx % myLevel->CellX == 5) {
 				// Glued right
 				if (pressedDown || pressedSpace) {
-					VelY = 2.f - AccelY;
+					VelY = RebounceVelY - AccelY;
 					VelX = MaxVelX;
 					Status = BOUNCING;
 				}
@@ -2434,7 +2446,7 @@ void cBumpy::update()
 			else {
 				// Glued left
 				if (pressedDown || pressedSpace) {
-					VelY = 2.f - AccelY;
+					VelY = RebounceVelY - AccelY;
 					VelX = -MaxVelX;
 					Status = BOUNCING;
 				}
@@ -2729,7 +2741,7 @@ forced:							if (VelY > 0) {
 								if (VelY > 0 && (Y >= obj->Y))
 								{
 									// Find the next teleport
-									cTeleport* next = static_cast<cTeleport*>(myLevel->FindNextObject(obj->myCell, OBJ_FLOOR_Teleport));
+									cTeleport* next = static_cast<cTeleport*>(myLevel->FindNextObjectVisible(obj->myCell, OBJ_FLOOR_Teleport));
 									if (next) {
 										// Translate Bumpy
 										X += (next->myCell->col - obj->myCell->col) * myLevel->CellX;
@@ -2979,8 +2991,8 @@ rebound:						// Restore status
 								VelX = (VelX > 0) ? -MaxVelX : MaxVelX;
 								//float oldv = -VelY;
 								//VelY = oldv + AccelY;
-								VelY = 2.0f;
-								float oldv = 1.6f;
+								VelY = RebounceVelY;
+								float oldv = VelY - AccelY;
 								// Update X,Y
 								Y += (oldv + VelY) / 2;
 								X += VelX;
@@ -3126,7 +3138,7 @@ void cBumpy::render(SDL_Renderer* renderer)
 		SDL_FRect clip = { 0, 0, W, H};
 		if (Status == TELEPORTING) {
 			long ch = lroundf(Y + H) % myLevel->CellY;
-			if (ch < H) clip = { X, Y, W, H - ch};
+			if (ch < H) clip = { 0, 0, W, H - ch};
 		}
 		Texture->render((int)X, (int)Y, &clip);
 	}
@@ -3221,18 +3233,6 @@ cEnemy::~cEnemy() {}
 
 void cEnemy::update()
 {
-	// Update position
-	Y += VelY;
-	X += VelX;
-	Collider.x = (int)X;
-	Collider.y = (int)Y;
-
-	// Calculate velocity
-	bool goup = false;
-	bool godown = false;
-	bool goleft = false;
-	bool goright = false;
-
 	// Is the enemy in the center of the cell?
 	long incellx = SDL_lroundf(X + W / 2) % myLevel->CellX;
 	long incelly = SDL_lroundf(Y + H / 2) % myLevel->CellY;
@@ -3246,6 +3246,12 @@ void cEnemy::update()
 		bool freedown = true;
 		bool freeleft = true;
 		bool freeright = true;
+
+		// Set the direction
+		bool goup = false;
+		bool godown = false;
+		bool goleft = false;
+		bool goright = false;
 
 		// Downwards
 		cCell* cell = myCell;
@@ -3462,25 +3468,19 @@ void cEnemy::update()
 
 		default: break;
 		}
+
+		// Update the velocity
+		if (goright) SetDirection(0);
+		else if (godown) SetDirection(1);
+		else if (goleft) SetDirection(2);
+		else if (goup) SetDirection(3);
 	}
-	
-	// Update the velocity
-	if (goup) {
-		VelX = 0;
-		VelY = -EnemyVel;
-	}
-	else if (godown) {
-		VelX = 0;
-		VelY = EnemyVel;
-	}
-	else if (goright) {
-		VelX = EnemyVel;
-		VelY = 0;
-	}
-	else if (goleft) {
-		VelX = -EnemyVel;
-		VelY = 0;
-	}
+
+	// Update position
+	Y += VelY;
+	X += VelX;
+	Collider.x = (int)X;
+	Collider.y = (int)Y;
 
 	// Update myCell
 	int r = (int)(Y + H / 2) / myLevel->CellY;
@@ -3858,6 +3858,7 @@ void cDecision::render(SDL_Renderer* renderer)
 	}
 	else {
 		// Render default
+		RenderObjectDefault(renderer, type, X, Y, W, H, Status);
 	}
 }
 
@@ -3978,6 +3979,7 @@ cSpineUD::cSpineUD(int status) : cObject()
 	Collider.w = (int)W;
 	Collider.h = (int)H;
 	Texture = &txSpineDown;
+	Status = status;
 }
 
 cSpineUD::~cSpineUD() {}
@@ -4784,7 +4786,7 @@ void RenderObjectDefault(SDL_Renderer* renderer, int objtype, float x, float y, 
 		if (status == cEnemy::DUMB) SDL_SetRenderDrawColor(renderer, 0xf0, 0xa0, 0xa0, 255);
 		else if (status == cEnemy::RANDOM) SDL_SetRenderDrawColor(renderer, 0xd0, 0x60, 0x60, 255);
 		else if (status == cEnemy::NASTY) SDL_SetRenderDrawColor(renderer, 0xc0, 0x20, 0x20, 255);
-		RenderFillCircle(renderer, x, y, 10);
+		RenderFillCircle(renderer, x, y, BumpyW / 2.);
 
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 255);
 		RenderDrawCircle(renderer, x - 4, y - 2, 4);
@@ -4795,7 +4797,7 @@ void RenderObjectDefault(SDL_Renderer* renderer, int objtype, float x, float y, 
 		break;
 	case OBJ_Life:
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x80, 0xC0, 255);
-		RenderFillCircle(renderer, x, y, 10);
+		RenderFillCircle(renderer, x, y, BumpyW / 2.);
 
 		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 255);
 		RenderDrawCircle(renderer, x - 4, y - 2, 3);

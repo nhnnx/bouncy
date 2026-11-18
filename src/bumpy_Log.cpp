@@ -4,12 +4,17 @@ Bouncy's Arcade Fantasy - Log Development
 ---------------------------------------------------
 
 TO DO:
-- Bumpy's dimension must be >20px
 - Magnetic ceiling should attract even when VelX != 0 and !pressedDown
   maybe test when (hitfloor==true) but position and velocity must be reset...
 - Improve cloud-enemy interaction
-
 ---------------------------------------------------
+
+18 Nov 2026 Build 33
+---------------------
+- Set Bumpy's dimensions to 30 pixels. It seems to work fine.
+  Adjusted Bumpy's speed after rebouncing against a side object.
+  Updated life and enemy dimension as well. World design adapted.
+- Bug fixes: teleport to next visible teleport, and correctly clip bumpy when teleporting
 
 11 Nov 2026 Build 32
 ---------------------
@@ -229,14 +234,15 @@ Editor:
   6. More (high scores, options/difficulty, fullscreen, variable level grid...)
 
 Road map:
+---------
 
-  2025        2026
-  J A S O N D ... S O N D
-1 ===................
-2 ..=====...=......==
-3 .....=.===.........
-4 ..=...=..........=.
-5 ..................=
-6 ...................
+  2025        2026        2027
+  J A S O N D ... S O N D 
+1 ===.....................
+2 ..=====...=......==.==..
+3 .....=.===..............
+4 ..=...=..........=......
+5 ..................=.....
+6 ........................
 
 */

@@ -50,7 +50,7 @@ bool Initialize(const char* title, int width, int height)
 	else
 	{
 		// Add icon, hide the mouse...
-		SDL_Surface* icon = IMG_Load("images/bumpy.png");
+		SDL_Surface* icon = IMG_Load("images/bumpy30.png");
 		bool ok = SDL_SetWindowIcon(gWindow, icon);
 		if (!ok) SDL_Log("Cannot set window icon! SDL Error: %s\n", SDL_GetError());
 

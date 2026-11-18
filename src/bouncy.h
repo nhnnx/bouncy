@@ -132,8 +132,8 @@ public:
 	LTexture* Background;
 	int nObj;
 	cObject** Objects;
-	int CellX;
-	int CellY;
+	int Xoff, Yoff;
+	int CellX, CellY;
 	bool Quit;
 	cBumpy* Bumpy;
 	cCloud* Cloud;
@@ -177,6 +177,7 @@ public:
 	cCell* SetGrid(int cols, int rows);
 	cCell* grid(int col, int row);
 	cObject* FindNextObject(cCell* cell, unsigned int objtype);
+	cObject* FindNextObjectVisible(cCell* cell0, unsigned int objtype);
 
 	void ExportCode();
 
@@ -250,8 +251,12 @@ public:
 static float ShotVelX = 6.0;
 static float MaxVelX = 4.0;
 static float MaxVelY = 4.0;
+static float RebounceVelY = 2.4;
 static float AccelY = 0.4f;
 static float EnemyVel = 2.0f;
+
+static int BumpyW = 30;
+static int BumpyH = 30;
 
 class cBumpy : public cObject
 //------------------------------------
